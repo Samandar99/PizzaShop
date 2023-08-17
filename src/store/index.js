@@ -13,8 +13,86 @@ const store = createStore({
     modalCart: [],
     localCart: [],
     sum: 0,
+    cardsFavoriet: [
+      {
+        title: "Картофель из печи",
+        description: "Порция 95 г",
+        img: require("@/assets/images/beverage1.png"),
+      },
+      {
+        title: "Филадельфия крем-брюле",
+        description: "Описание карточки",
+        img: require("@/assets/images/lavash.png"),
+      },
+      {
+        title: "Супер Филадельфия",
+        description: "Описание карточки",
+        img: require("@/assets/images/dessert.png"),
+      },
+      {
+        title: "Тигр мама",
+        description: "Описание карточки",
+        img: require("@/assets/images/pizzass.png"),
+      },
+      {
+        title: "Карточка",
+        description: "Описание карточки",
+        img: require("@/assets/images/Rectangle3.png"),
+      },
+      {
+        title: "Карточка",
+        description: "Описание карточки",
+        img: require("@/assets/images/kfc.png"),
+      },
+      {
+        title: "Карточка",
+        description: "Описание карточки",
+        img: require("@/assets/images/beverage1.png"),
+      },
+      {
+        title: "Карточка",
+        description: "Описание карточки 2",
+        img: require("@/assets/images/beverage2.png"),
+      },
+
+      // Добавьте больше карточек по необходимости
+    ],
   },
   mutations: {
+    productsQuantityPlus(state, productId) {
+      // console.log(productId);
+      const product = state.localCart.find((item) => item.id === productId);
+      if (product && product.quantity > 0) {
+        product.quantity++;
+        product.totalPrice += product.price;
+
+        if (product.originalPrice === undefined) {
+          product.originalPrice = product.price;
+        }
+
+        localStorage.notes = JSON.stringify(state.localCart);
+      }
+    },
+
+    productsQuantityMinus(state, productId) {
+      const product = state.localCart.find((item) => item.id === productId);
+      if (product && product.quantity > 0) {
+        product.quantity--;
+        product.totalPrice -= product.price;
+        product.price = product.originalPrice;
+        if (product.quantity === 0) {
+          const index = state.localCart.findIndex(
+            (item) => item.id === productId
+          );
+          if (index !== -1) {
+            state.localCart.splice(index, 1);
+          }
+        }
+
+        localStorage.notes = JSON.stringify(state.localCart);
+      }
+    },
+
     getPostsPizza(state, allPostsPizza) {
       state.pizzaProducts1 = allPostsPizza;
     },
@@ -60,11 +138,12 @@ const store = createStore({
       } else {
         // Если элемента нет, добавляем его в localCart
         state.localCart.push({ ...hom, quantity: 1, totalPrice: hom.price });
+        // localStorage.setItem("items", state.localCart);
       }
-      
+
       // console.log(state.sum += state.localCart.price);
-      
-      for(let i = 0; i < state.localCart.length; i++){
+
+      for (let i = 0; i < state.localCart.length; i++) {
         state.sum += state.localCart[i].price;
       }
 
@@ -75,8 +154,12 @@ const store = createStore({
       const productToAddToModalCart = state.pizzaProducts1.find(
         (item) => item.id === id
       );
-      if (productToAddToModalCart) {
+      if (state.localCart && state.localCart.length > 0) {
         state.modalCart.push(productToAddToModalCart);
+
+        localStorage.notes = JSON.stringify(state.localCart);
+      } else {
+        localStorage.removeItem("notes");
       }
     },
     closeModal(state, close) {
@@ -188,6 +271,11 @@ const store = createStore({
     },
     getPizza(state) {
       return state.pizzaProducts1.find((item) => item.id == 2);
+    },
+
+    getNotes(state) {
+      let localNotes = localStorage.notes;
+      state.localCart = JSON.parse(localNotes) || [];
     },
   },
 });

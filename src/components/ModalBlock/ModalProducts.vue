@@ -3,7 +3,7 @@
     <div class="modal_products" @click.stop="">
       <i class="bx bx-x-circle closes" @click="closeModal"></i>
       <div class="products_img">
-        <img class="modal_img" src="@/assets/images/bigpizza.png" alt="" />
+        <img class="modal_img" src="@/assets/images/pizzass.png" alt="" />
       </div>
       <div class="modal_options">
         <div class="modal-options__title">
@@ -90,10 +90,7 @@
         </div>
       </div>
     </div>
-    <!-- {{ modalCart.map((item) => {
-      return item.title
-    }) }} -->
-   
+ 
   </div>
 </template>
 
@@ -110,7 +107,10 @@ export default {
       "localCart",
       "pizzaProducts1",
     ]),
+
+
   },
+  mounted() {},
 
   methods: {
     ...mapMutations(["closeModal", "cartAddLocal", "modalOpenProducts"]),

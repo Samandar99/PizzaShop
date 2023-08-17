@@ -7,7 +7,9 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "@vue/reactivity": "^3.3.4",
     "core-js": "^3.8.3",
+    "swiper": "^10.1.0",
     "vue": "^3.2.13",
     "vue-content-loader": "^2.0.1",
     "vue-router": "^4.1.6",

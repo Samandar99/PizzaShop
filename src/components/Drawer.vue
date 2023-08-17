@@ -18,9 +18,19 @@
                 <p class="drawer__name">Традиционное тесто, 23 см</p>
                 <div class="options">
                   <div class="options__btns">
-                    <button class="darwer-btn">-</button>
+                    <button
+                      class="darwer-btn"
+                      @click="productsQuantityMinus(local.id)"
+                    >
+                      -
+                    </button>
                     <button class="darwer-btn">{{ local.quantity }}</button>
-                    <button class="darwer-btn">+</button>
+                    <button
+                      class="darwer-btn"
+                      @click="productsQuantityPlus(local.id)"
+                    >
+                      +
+                    </button>
                   </div>
                   <b>{{ local.price }} ₽</b>
                 </div>
@@ -33,7 +43,14 @@
       <div class="drawer-foot">
         <div class="draw-flex">
           <p class="total-price">Итого: {{ getTotalPrice }} ₽</p>
-          <button class="send-btn">Оформить заказ</button>
+          <router-link
+            @click="closeCart(false)"
+            class="send-btn"
+            :to="order.url"
+            v-for="order in orderLinks"
+            :key="order.name"
+            >Оформить заказ</router-link
+          >
         </div>
       </div>
     </div>
@@ -48,24 +65,33 @@ export default {
     openCarts: {
       typeof: Boolean,
     },
+    orderLinks: {
+      typeof: Array,
+    },
   },
   data() {
     return {};
   },
   computed: {
-    ...mapState(["localCart","sum"]),
+    ...mapState(["localCart", "sum"]),
     ...mapGetters(["getModalCart", "getPro"]),
-    getTotalPrice(){
-      return this.localCart.reduce((total,item) => total + item.totalPrice,0)
-    }
-     
-  
+
+    getTotalPrice() {
+      return this.localCart.reduce((total, item) => total + item.totalPrice, 0);
+    },
   },
 
   methods: {
+    ...mapMutations(["productsQuantityMinus", "productsQuantityPlus"]),
+
     closeCart(close) {
       this.$emit("closeCart", close);
     },
+
+    // productsQuantityMinus(products) {
+    //   // products[0].quantity - 1
+    //   console.log(products.quantity - 1);
+    // },
   },
   mounted() {
     const cartItemData = this.localCart;
@@ -74,4 +100,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.send-btn {
+  cursor: pointer;
+}
+</style>

@@ -64,15 +64,17 @@ export default {
     ...mapState(["pizzaProducts1"]),
     ...mapState(["openShowModalProducts"]),
     ...mapState(["modalCart"]),
+    ...mapGetters(["getNotes"]),
     // ...mapGetters(["getPizza"])
   },
   methods: {
     ...mapActions(["getPostsPizza", "modalOpenProducts"]),
-    // ...mapMutations(["modalOpenProducts"]),
+    ...mapMutations(["modalOpenProducts"]),
   },
 
   mounted() {
     this.getPostsPizza();
+    this.getNotes;
   },
 };
 </script>

@@ -33,7 +33,7 @@
 
         <li class="nav-item cart" @click="sendOpenCart(true)">
           <i class="bx bxs-cart-alt withe"></i>
-          <p class="cart__count">{{ localCart.length }} ₽</p>
+          <p class="cart__count">{{ localCart.length }} кол</p>
         </li>
         <div class="iswas-cart">
           <span>Товар добавлен в корзину</span>
@@ -64,9 +64,8 @@ export default {
     };
   },
   computed: {
-    ...mapState(['modalCart',"localCart"])
+    ...mapState(["modalCart", "localCart"]),
   },
-
 
   methods: {
     sendOpenCart(openCart) {

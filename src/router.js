@@ -1,8 +1,8 @@
 import {
-    createRouter,
-    createWebHistory,
-    createWebHashHistory
-} from 'vue-router';
+  createRouter,
+  createWebHistory,
+  createWebHashHistory,
+} from "vue-router";
 
 import Home from "@/pages/Home.vue";
 import Pizza from "@/pages/Pizza.vue";
@@ -18,101 +18,105 @@ import CurrentBeverages from "@/pages/Current/CurrentBeverages.vue";
 import CurrentSnacks from "@/pages/Current/CurrentSnacks.vue";
 import ComboCurrent from "@/pages/Current/ComboCurrent.vue";
 import DesertCurrent from "@/pages/Current/DesertCurrent.vue";
-import SauceCurrent from '@/pages/Current/SauceCurrent.vue';
-import NotFound from '@/pages/404.vue';
+import SauceCurrent from "@/pages/Current/SauceCurrent.vue";
+import NotFound from "@/pages/404.vue";
+import PlaceOrder from "@/pages/PlaceOrder.vue";
 
 const routers = createRouter({
-    history: createWebHistory(),
-    routes: [{
-        path: '/',
-        name: 'home',
-        component: Home
+  history: createWebHistory(),
+  routes: [
+    {
+      path: "/",
+      name: "home",
+      component: Home,
     },
     {
-        path: '/pizza',
-        name: 'pizza',
-        component: Pizza
+      path: "/pizza",
+      name: "pizza",
+      component: Pizza,
     },
     {
-        path: '/pizza/:id',
-        name: 'CurrentPizza',
-        component: CurrentPizza,
+      path: "/pizza/:id",
+      name: "CurrentPizza",
+      component: CurrentPizza,
     },
     {
-        path: '/sushi',
-        name: 'sushi',
-        component: Sushi,
+      path: "/sushi",
+      name: "sushi",
+      component: Sushi,
     },
     {
-        path: '/sushi/:id',
-        name: 'CurrentSushi',
-        component: CurrentSushi,
-    },
-
-
-    {
-        path: '/beverages',
-        name: 'beverages',
-        component: Beverages
-    },
-    {
-        path: '/beverages/:id',
-        name: 'CurrentBeverages',
-        component: CurrentBeverages,
+      path: "/sushi/:id",
+      name: "CurrentSushi",
+      component: CurrentSushi,
     },
 
     {
-        path: '/snacks',
-        name: 'snacks',
-        component: Snacks
+      path: "/beverages",
+      name: "beverages",
+      component: Beverages,
     },
     {
-        path: '/snacks/:id',
-        name: 'CurrentSnacks',
-        component: CurrentSnacks,
+      path: "/beverages/:id",
+      name: "CurrentBeverages",
+      component: CurrentBeverages,
     },
 
     {
-        path: '/combo',
-        name: 'combo',
-        component: Combo
+      path: "/snacks",
+      name: "snacks",
+      component: Snacks,
+    },
+    {
+      path: "/snacks/:id",
+      name: "CurrentSnacks",
+      component: CurrentSnacks,
     },
 
     {
-        path: '/combo/:id',
-        name: 'ComboCurrent',
-        component: ComboCurrent,
-
-    },
-    {
-        path: '/desert',
-        name: 'desert',
-        component: Desert
-    },
-    {
-        path: '/desert/:id',
-        name: 'DesertCurrent',
-        component: DesertCurrent,
+      path: "/combo",
+      name: "combo",
+      component: Combo,
     },
 
     {
-        path: '/sauce',
-        name: 'sauce',
-        component: Sauce
+      path: "/combo/:id",
+      name: "ComboCurrent",
+      component: ComboCurrent,
     },
     {
-        path: '/sauce/:id',
-        name: 'sauceCurrent',
-        component: SauceCurrent
+      path: "/desert",
+      name: "desert",
+      component: Desert,
     },
     {
-        path: '/:pathMatch(.*)*',
-        name: '404',
-        component: NotFound
+      path: "/desert/:id",
+      name: "DesertCurrent",
+      component: DesertCurrent,
     },
 
+    {
+      path: "/sauce",
+      name: "sauce",
+      component: Sauce,
+    },
+    {
+      path: "/sauce/:id",
+      name: "sauceCurrent",
+      component: SauceCurrent,
+    },
+    {
+      path: "/PlaceOrder",
+      name: "PlaceOrder",
+      component: PlaceOrder,
+    },
 
-    ]
-})
+    {
+      path: "/:pathMatch(.*)*",
+      name: "404",
+      component: NotFound,
+    },
+  ],
+});
 
-export default routers
+export default routers;

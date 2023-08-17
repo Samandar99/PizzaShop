@@ -2,7 +2,7 @@
   <transition name="fade">
     <ModalProducts v-show="openShowModalProducts" />
   </transition>
-  <Drawer :openCarts="openCarts" @closeCart="getCloseCart" />
+  <Drawer :openCarts="openCarts" @closeCart="getCloseCart" :orderLinks="orderLinks"/>
   <Header @sendOpenCart="getOpenCart" :links="links" />
   <Categories :links="links" />
   <Discount />
@@ -16,7 +16,6 @@
 </template>
 
 <script>
-
 import { mapState, mapActions, mapGetters, mapMutations } from "vuex";
 import Header from "@/components/Header.vue";
 import Categories from "@/components/Categories.vue";
@@ -49,6 +48,8 @@ export default {
         { title: "Десерты", url: "/desert" },
         { title: "Соусы", url: "/sauce" },
       ],
+      orderLinks: [{ title: "Drawer", url: "/PlaceOrder" }],
+
       openCarts: null,
       productsPizza: null,
     };
@@ -77,10 +78,8 @@ export default {
     ...mapState(["openShowModalProducts"]),
   },
   created() {
-   
-    this.getItemsPizza()
-   
-  }
+    this.getItemsPizza();
+  },
 };
 </script>
 
@@ -93,6 +92,5 @@ export default {
 .fade-enter,
 .fade-leave-to {
   opacity: 0;
-  
 }
 </style>
