@@ -59,6 +59,9 @@ const store = createStore({
     ],
   },
   mutations: {
+    setLocalCart(state, cart) {
+      state.localCart = cart;
+    },
     productsQuantityPlus(state, productId) {
       // console.log(productId);
       const product = state.localCart.find((item) => item.id === productId);
@@ -113,9 +116,7 @@ const store = createStore({
       state.deserts = allproductsDesert;
     },
     getSauces(state, allproductsSauces) {
-      setTimeout(() => {
-        state.saucesDates = allproductsSauces;
-      }, 2000);
+      state.saucesDates = allproductsSauces;
     },
 
     cartAddLocal(state, addCloseModal) {
@@ -124,39 +125,29 @@ const store = createStore({
     },
 
     modalOpenProducts(state, { boolean, id, hom }) {
-      // Проверяем, есть ли уже элемент с таким id в localCart
       const existingProduct = state.localCart.find(
         (item) => item.id === hom.id
       );
 
       if (existingProduct) {
-        // let price = 0
-        // Если элемент существует, увеличиваем его количество на 1
         existingProduct.quantity++;
         existingProduct.totalPrice += existingProduct.price;
-        let sum = (existingProduct.price += existingProduct.price);
       } else {
-        // Если элемента нет, добавляем его в localCart
         state.localCart.push({ ...hom, quantity: 1, totalPrice: hom.price });
-        // localStorage.setItem("items", state.localCart);
       }
 
-      // console.log(state.sum += state.localCart.price);
-
+      state.sum = 0; // Обнуляем сумму перед подсчетом
       for (let i = 0; i < state.localCart.length; i++) {
-        state.sum += state.localCart[i].price;
+        state.sum += state.localCart[i].totalPrice;
       }
-
-      // console.log(hom);
 
       state.openShowModalProducts = boolean;
-      // Находим продукт по id и добавляем его в modalCart
+
       const productToAddToModalCart = state.pizzaProducts1.find(
         (item) => item.id === id
       );
       if (state.localCart && state.localCart.length > 0) {
         state.modalCart.push(productToAddToModalCart);
-
         localStorage.notes = JSON.stringify(state.localCart);
       } else {
         localStorage.removeItem("notes");
@@ -167,6 +158,20 @@ const store = createStore({
     },
   },
   actions: {
+    restoreLocalCart({ commit }) {
+      try {
+        const localNotes = localStorage.getItem("notes");
+        if (localNotes !== null) {
+          commit("setLocalCart", JSON.parse(localNotes));
+        } else {
+          commit("setLocalCart", []);
+        }
+      } catch (error) {
+        console.log("Error parsing or restoring local cart", error);
+        commit("setLocalCart", []);
+      }
+    },
+
     modalOpenProducts({ commit }, { id, hom }) {
       commit("modalOpenProducts", { boolean: true, id: id, hom: hom });
       // console.log(hom);
@@ -274,8 +279,20 @@ const store = createStore({
     },
 
     getNotes(state) {
-      let localNotes = localStorage.notes;
-      state.localCart = JSON.parse(localNotes) || [];
+      try {
+        const localNotes = localStorage.getItem("notes");
+        if (localNotes !== null) {
+          state.localNotes = JSON.parse(localNotes);
+        } else {
+          state.localNotes = [];
+        }
+      } catch (error) {
+        console.log("Error parsing or re", error);
+        state.localNotes = [];
+      }
+
+      // let localNotes = localStorage.notes;
+      // state.localCart = JSON.parse(localNotes) || [];
     },
   },
 });

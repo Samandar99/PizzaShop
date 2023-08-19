@@ -1,10 +1,10 @@
 <template>
   <header class="header">
     <nav class="navbar">
-      <a href="#" class="nav-branding">
+      <router-link to="/" class="nav-branding">
         <i class="bx bxs-pizza loc"></i>
         <span class="pizza-name">Куда пицца</span>
-      </a>
+      </router-link>
       <ul
         v-for="linkd in links"
         class="menu_close"

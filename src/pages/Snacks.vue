@@ -25,7 +25,12 @@
           <span class="card__price">от {{ sncak.price }} ₽</span>
         </div>
       </div>
-      <Blockskeleton class="card py" v-for="(loading, index) in loadingLength" :key="index" v-else />
+      <Blockskeleton
+        class="card py"
+        v-for="(loading, index) in loadingLength"
+        :key="index"
+        v-else
+      />
     </div>
   </section>
 </template>

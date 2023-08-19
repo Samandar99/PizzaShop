@@ -80,10 +80,10 @@ export default {
       return this.localCart.reduce((total, item) => total + item.totalPrice, 0);
     },
   },
-
   methods: {
     ...mapMutations(["productsQuantityMinus", "productsQuantityPlus"]),
-
+    ...mapActions(["getPostsPizza", "modalOpenProducts"]),
+    ...mapActions(["getPostsPizza", "restoreLocalCart"]),
     closeCart(close) {
       this.$emit("closeCart", close);
     },
@@ -96,6 +96,8 @@ export default {
   mounted() {
     const cartItemData = this.localCart;
     cartItemData.quantity = 1;
+    this.getPostsPizza();
+    this.restoreLocalCart();
   },
 };
 </script>

@@ -8,7 +8,12 @@
       </div>
     </div>
     <div class="cards container">
-      <div class="card" v-for="sush in postsSushi" :key="sush.id" v-if="postsSushi">
+      <div
+        class="card"
+        v-for="sush in postsSushi"
+        :key="sush.id"
+        v-if="postsSushi"
+      >
         <div class="news">NEW</div>
         <router-link :to="/sushi/ + sush.id">
           <img :src="sush.img" alt="" />
@@ -24,24 +29,29 @@
           <span class="card__price">от {{ sush.price }} ₽</span>
         </div>
       </div>
-      <Blockskeleton class="card py" v-for="loading in loadingLength" v-else />
+      <template v-else>
+        <Blockskeleton
+          class="card py"
+          v-for="(loading, index) in loadingLength"
+          :key="index"
+        />
+      </template>
     </div>
   </section>
 </template>
 
 <script>
 import { mapState, mapActions, mapGetters, mapMutations } from "vuex";
-import Blockskeleton from '@/components/ProductsBlock/Blockskeleton.vue';
+import Blockskeleton from "@/components/ProductsBlock/Blockskeleton.vue";
 
 export default {
-
   components: {
-    Blockskeleton
+    Blockskeleton,
   },
 
   data() {
     return {
-      loadingLength: 8
+      loadingLength: 8,
     };
   },
   computed: {
@@ -49,7 +59,7 @@ export default {
   },
   methods: {
     ...mapActions(["getPostsSushi"]),
-    ...mapMutations(["modalOpenProducts"])
+    ...mapMutations(["modalOpenProducts"]),
   },
   mounted() {
     this.getPostsSushi();

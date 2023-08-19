@@ -8,7 +8,12 @@
       </div>
     </div>
     <div class="cards container">
-      <div class="card" v-for="desertsItem in deserts" :key="desertsItem.id" v-if="deserts">
+      <div
+        class="card"
+        v-for="desertsItem in deserts"
+        :key="desertsItem.id"
+        v-if="deserts"
+      >
         <div class="news">NEW</div>
         <router-link :to="/desert/ + desertsItem.id">
           <img :src="desertsItem.img" alt="" />
@@ -24,18 +29,23 @@
           <span class="card__price">от {{ desertsItem.price }} ₽</span>
         </div>
       </div>
-      <Blockskeleton class="card py" v-for="(itemLoadings, index) in loadingLength" :key="index" v-else />
+      <Blockskeleton
+        class="card py"
+        v-for="(itemLoadings, index) in loadingLength"
+        :key="index"
+        v-else
+      />
     </div>
   </section>
 </template>
 
 <script>
 import { mapState, mapActions, mapGetters, mapMutations } from "vuex";
-import Blockskeleton from '@/components/ProductsBlock/Blockskeleton.vue';
+import Blockskeleton from "@/components/ProductsBlock/Blockskeleton.vue";
 
 export default {
   components: {
-    Blockskeleton
+    Blockskeleton,
   },
   data() {
     return {
@@ -52,10 +62,7 @@ export default {
 
   mounted() {
     this.getDesert();
-
   },
-
-
 };
 </script>
 

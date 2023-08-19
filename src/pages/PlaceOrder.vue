@@ -1,39 +1,36 @@
 <template>
   <div class="block">
-    <h2 class="block__title">Ваш заказ</h2>
-    <div class="block__cards">
-      <div class="block__card">
+    <h2 class="block__title" v-if="localCart.length > 0">Ваш заказ</h2>
+    <div class="block__cards" v-if="localCart.length > 0">
+      <div
+        class="block__card"
+        v-for="productsOrder in localCart"
+        :key="productsOrder.id"
+      >
         <div class="block__card-left">
-          <img class="card__img" src="@/assets/images/pizzass.png" alt="" />
+          <img class="card__img" :src="productsOrder.img" alt="" />
           <div class="block__card-left-txt">
-            <h3 class="card__title">Пепперони по-деревенски</h3>
-            <p class="card__txt">Традиционное тесто, 23 см</p>
+            <h3 class="card__title">{{ productsOrder.title }}</h3>
+            <p class="card__txt">{{ productsOrder.text }}</p>
           </div>
         </div>
         <div class="block__card-right">
           <div class="card__options">
-            <button class="card__btn">-</button>
-            <span class="card__count">2</span>
-            <button class="card__btn">+</button>
+            <button
+              class="card__btn"
+              @click="productsQuantityMinus(productsOrder.id)"
+            >
+              -
+            </button>
+            <span class="card__count">{{ productsOrder.quantity }}</span>
+            <button
+              class="card__btn"
+              @click="productsQuantityPlus(productsOrder.id)"
+            >
+              +
+            </button>
           </div>
-          <p class="card__totalprice">399 ₽</p>
-        </div>
-      </div>
-      <div class="block__card">
-        <div class="block__card-left">
-          <img class="card__img" src="@/assets/images/pizzass.png" alt="" />
-          <div class="block__card-left-txt">
-            <h3 class="card__title">Пепперони по-деревенски</h3>
-            <p class="card__txt">Традиционное тесто, 23 см</p>
-          </div>
-        </div>
-        <div class="block__card-right">
-          <div class="card__options">
-            <button class="card__btn">-</button>
-            <span class="card__count">2</span>
-            <button class="card__btn">+</button>
-          </div>
-          <p class="card__totalprice">399 ₽</p>
+          <p class="card__totalprice">{{ productsOrder.totalPrice }} ₽</p>
         </div>
       </div>
 
@@ -47,8 +44,8 @@
         <b class="block__total">Итого: 2 379 ₽</b>
       </div>
     </div>
-
-    <div class="block__carusel">
+    <h3 class="notorder" v-else>У вас нет заказов !!!</h3>
+    <div class="block__carusel" v-if="localCart.length > 0">
       <div>
         <h2 class="block__carusel-title">Добавить к заказу?</h2>
         <swiper
@@ -138,6 +135,57 @@
         </swiper>
       </div>
     </div>
+
+    <div class="block__users" v-if="localCart.length > 0">
+      <h2 class="block__users-title">О вас</h2>
+
+      <form action="" class="block__form">
+        <div>
+          <label for="" class="user__name">Имя* </label>
+          <input placeholder="Имя" class="user__inp" type="text" />
+        </div>
+        <div>
+          <label for="" class="user__name">Номер телефона* </label>
+          <input placeholder="Номер" class="user__inp" type="text" />
+        </div>
+        <div>
+          <label for="" class="user__name">Почта </label>
+          <input placeholder="Почта" class="user__inp" type="text" />
+        </div>
+      </form>
+
+      <div class="users__order">
+        <h3 class="order__title">Доставка</h3>
+        <div class="order__btns">
+          <button
+            :class="btnColorDelivery ? 'order__btn-active' : 'order__btn'"
+            @click="btnColorDelivery = true"
+          >
+            Доставка
+          </button>
+          <button
+            @click="btnColorDelivery = false"
+            :class="!btnColorDelivery ? 'order__btn-active' : 'order__btn'"
+          >
+            Самовывоз
+          </button>
+        </div>
+      </div>
+      <div class="users__commit">
+        <h3 class="users__commit-title">Комментарий</h3>
+        <form action="">
+          <textarea
+            class="users__text"
+            placeholder="Есть уточнения?"
+          ></textarea>
+
+          <div class="users_t">
+            <b class="users__order-total">Итого: 2 379 ₽</b>
+            <button class="users__order-send">Оформить заказ</button>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -145,7 +193,7 @@
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/pagination";
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions, mapMutations } from "vuex";
 
 import { Pagination } from "swiper/modules";
 
@@ -157,6 +205,8 @@ export default {
 
   data() {
     return {
+      btnColorDelivery: false,
+
       cardsCouse: [
         {
           title: "Сырный соус",
@@ -204,7 +254,7 @@ export default {
   },
 
   computed: {
-    ...mapState(["cardsFavoriet", "saucesDates"]),
+    ...mapState(["cardsFavoriet", "saucesDates", "localCart"]),
     chunkedCards() {
       const chunkSize = 4; // Количество карточек в одной "строке"
       const chunks = [];
@@ -225,6 +275,7 @@ export default {
   },
   methods: {
     ...mapActions(["getSauces"]),
+    ...mapMutations(["productsQuantityMinus", "productsQuantityPlus"]),
   },
 
   mounted() {
@@ -236,6 +287,22 @@ export default {
 <style>
 /*  */
 
+.notorder {
+  color: #ff7010;
+  font-size: 40px;
+  max-width: 400px;
+  width: 100%;
+  min-height: 400px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.card__txt {
+  max-width: 300px;
+  width: 100%;
+}
 .heit {
   min-height: 300px !important;
 }
@@ -268,6 +335,7 @@ export default {
 .card__img {
   max-width: 120px;
   width: 100%;
+  object-fit: contain;
 }
 
 .block__card-left {
