@@ -8,34 +8,35 @@
       </div>
     </div>
     <div class="cards container">
-      <div
-        class="card"
-        v-for="sush in postsSushi"
-        :key="sush.id"
-        v-if="postsSushi"
-      >
-        <div class="news">NEW</div>
-        <router-link :to="/sushi/ + sush.id">
-          <img :src="sush.img" alt="" />
-        </router-link>
-        <div class="card__text">
-          <b class="card-n">{{ sush.title }}</b>
-          <p class="card-name__info">
-            {{ sush.text }}
-          </p>
+      <template v-if="postsSushi">
+        <div class="card" v-for="hom in postsSushi" :key="hom.id">
+          <div class="news">NEW</div>
+          <router-link :to="/sushi/ + hom.id">
+            <img :src="hom.img" alt="" />
+          </router-link>
+          <div class="card__text">
+            <b class="card-n">{{ hom.title }}</b>
+            <p class="card-name__info">
+              {{ hom.text }}
+            </p>
+          </div>
+          <div class="card-buy">
+            <button
+              class="card-btn"
+              @click="modalOpenProducts({ id: hom.id, hom: hom })"
+            >
+              Выбрать
+            </button>
+            <span class="card__price">от {{ hom.price }} ₽</span>
+          </div>
         </div>
-        <div class="card-buy">
-          <button class="card-btn" @click="modalOpenProducts">Выбрать</button>
-          <span class="card__price">от {{ sush.price }} ₽</span>
-        </div>
-      </div>
-      <template v-else>
-        <Blockskeleton
-          class="card py"
-          v-for="(loading, index) in loadingLength"
-          :key="index"
-        />
       </template>
+      <Blockskeleton
+        class="card py"
+        v-else
+        v-for="(loading, index) in loadingLength"
+        :key="index"
+      />
     </div>
   </section>
 </template>

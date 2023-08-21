@@ -8,25 +8,25 @@
       </div>
     </div>
     <div class="cards container">
-      <div
-        class="card"
-        v-for="desertsItem in deserts"
-        :key="desertsItem.id"
-        v-if="deserts"
-      >
+      <div class="card" v-for="hom in deserts" :key="hom.id" v-if="deserts">
         <div class="news">NEW</div>
-        <router-link :to="/desert/ + desertsItem.id">
-          <img :src="desertsItem.img" alt="" />
+        <router-link :to="/desert/ + hom.id">
+          <img :src="hom.img" alt="" />
         </router-link>
         <div class="card__text">
-          <b class="card-n">{{ desertsItem.title }}</b>
+          <b class="card-n">{{ hom.title }}</b>
           <p class="card-name__info">
-            {{ desertsItem.text }}
+            {{ hom.text }}
           </p>
         </div>
         <div class="card-buy">
-          <button class="card-btn">Выбрать</button>
-          <span class="card__price">от {{ desertsItem.price }} ₽</span>
+          <button
+            class="card-btn"
+            @click="modalOpenProducts({ id: hom.id, hom: hom })"
+          >
+            Выбрать
+          </button>
+          <span class="card__price">от {{ hom.price }} ₽</span>
         </div>
       </div>
       <Blockskeleton
@@ -58,6 +58,7 @@ export default {
 
   methods: {
     ...mapActions(["getDesert"]),
+    ...mapMutations(["modalOpenProducts"]),
   },
 
   mounted() {

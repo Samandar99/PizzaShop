@@ -8,21 +8,21 @@
       </div>
     </div>
     <div class="cards container">
-      <div class="card" v-for="sncak in snacks1" :key="sncak.id" v-if="snacks1">
+      <div class="card" v-for="hom in snacks1" :key="hom.id" v-if="snacks1">
         <div class="news">NEW</div>
-        <router-link :to="/snacks/ + sncak.id">
-          <img :src="sncak.img" alt="" />
+        <router-link :to="/snacks/ + hom.id">
+          <img :src="hom.img" alt="" />
         </router-link>
 
         <div class="card__text">
-          <b class="card-n">{{ sncak.title }}</b>
+          <b class="card-n">{{ hom.title }}</b>
           <p class="card-name__info">
-            {{ sncak.text }}
+            {{ hom.text }}
           </p>
         </div>
         <div class="card-buy">
-          <button class="card-btn">Выбрать</button>
-          <span class="card__price">от {{ sncak.price }} ₽</span>
+          <button class="card-btn" @click="modalOpenProducts({ id: hom.id, hom: hom })">Выбрать</button>
+          <span class="card__price">от {{ hom.price }} ₽</span>
         </div>
       </div>
       <Blockskeleton
@@ -53,6 +53,7 @@ export default {
   },
   methods: {
     ...mapActions(["getSnacks"]),
+    ...mapMutations(["modalOpenProducts"]),
   },
   mounted() {
     this.getSnacks();

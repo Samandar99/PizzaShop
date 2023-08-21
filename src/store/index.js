@@ -125,6 +125,7 @@ const store = createStore({
     },
 
     modalOpenProducts(state, { boolean, id, hom }) {
+      console.log(hom);
       const existingProduct = state.localCart.find(
         (item) => item.id === hom.id
       );
@@ -174,7 +175,7 @@ const store = createStore({
 
     modalOpenProducts({ commit }, { id, hom }) {
       commit("modalOpenProducts", { boolean: true, id: id, hom: hom });
-      // console.log(hom);
+      console.log(hom);
     },
 
     closeModal({ commit }) {

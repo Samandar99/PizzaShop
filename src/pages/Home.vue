@@ -52,40 +52,35 @@
       </div>
     </div>
     <div class="cards container">
-      <div
-        class="card"
-        v-for="sush in postsSushi"
-        :key="sush.id"
-        v-if="postsSushi"
-      >
-        <div class="news">NEW</div>
-        <router-link :to="/sushi/ + sush.id">
-          <img :src="sush.img" alt="" />
-        </router-link>
-        <div class="card__text">
-          <b class="card-n">{{ sush.title }}</b>
-          <p class="card-name__info">
-            {{ sush.text }}
-          </p>
+      <template v-if="postsSushi">
+        <div class="card" v-for="hom in postsSushi" :key="hom.id">
+          <div class="news">NEW</div>
+          <router-link :to="/sushi/ + hom.id">
+            <img :src="hom.img" alt="" />
+          </router-link>
+          <div class="card__text">
+            <b class="card-n">{{ hom.title }}</b>
+            <p class="card-name__info">
+              {{ hom.text }}
+            </p>
+          </div>
+          <div class="card-buy">
+            <button
+              class="card-btn"
+              @click="modalOpenProducts({ id: hom.id, hom: hom })"
+            >
+              Выбрать
+            </button>
+            <span class="card__price">от {{ hom.price }} ₽</span>
+          </div>
         </div>
-        <div class="card-buy">
-          <button
-            class="card-btn"
-            @click="modalOpenProducts({ id: sush.id, sushi: sushi })"
-          >
-            Выбрать
-          </button>
-          <span class="card__price">от {{ sush.price }} ₽</span>
-        </div>
-      </div>
-
-      <template v-else>
-        <Blockskeleton
-          class="card py"
-          v-for="(loading, index) in loadingLength"
-          :key="index"
-        />
       </template>
+      <Blockskeleton
+        class="card py"
+        v-for="(loading, index) in loadingLength"
+        :key="index"
+        v-else
+      />
     </div>
   </section>
   <section class="products">
@@ -97,23 +92,30 @@
       </div>
     </div>
     <div class="cards container">
-      <div class="card" v-for="sncak in snacks1" :key="sncak.id" v-if="snacks1">
-        <div class="news">NEW</div>
-        <router-link :to="/snacks/ + sncak.id">
-          <img :src="sncak.img" alt="" />
-        </router-link>
+      <template v-if="snacks1">
+        <div class="card" v-for="hom in snacks1" :key="hom.id">
+          <div class="news">NEW</div>
+          <router-link :to="/snacks/ + hom.id">
+            <img :src="hom.img" alt="" />
+          </router-link>
 
-        <div class="card__text">
-          <b class="card-n">{{ sncak.title }}</b>
-          <p class="card-name__info">
-            {{ sncak.text }}
-          </p>
+          <div class="card__text">
+            <b class="card-n">{{ hom.title }}</b>
+            <p class="card-name__info">
+              {{ hom.text }}
+            </p>
+          </div>
+          <div class="card-buy">
+            <button
+              class="card-btn"
+              @click="modalOpenProducts({ id: hom.id, hom: hom })"
+            >
+              Выбрать
+            </button>
+            <span class="card__price">от {{ hom.price }} ₽</span>
+          </div>
         </div>
-        <div class="card-buy">
-          <button class="card-btn">Выбрать</button>
-          <span class="card__price">от {{ sncak.price }} ₽</span>
-        </div>
-      </div>
+      </template>
       <Blockskeleton
         class="card py"
         v-for="(loading, index) in loadingLength"
@@ -131,27 +133,29 @@
       </div>
     </div>
     <div class="cards container">
-      <div
-        class="card"
-        v-for="desertsItem in deserts"
-        :key="desertsItem.id"
-        v-if="deserts"
-      >
-        <div class="news">NEW</div>
-        <router-link :to="/desert/ + desertsItem.id">
-          <img :src="desertsItem.img" alt="" />
-        </router-link>
-        <div class="card__text">
-          <b class="card-n">{{ desertsItem.title }}</b>
-          <p class="card-name__info">
-            {{ desertsItem.text }}
-          </p>
+      <template v-if="deserts">
+        <div class="card" v-for="hom in deserts" :key="hom.id">
+          <div class="news">NEW</div>
+          <router-link :to="/desert/ + hom.id">
+            <img :src="hom.img" alt="" />
+          </router-link>
+          <div class="card__text">
+            <b class="card-n">{{ hom.title }}</b>
+            <p class="card-name__info">
+              {{ hom.text }}
+            </p>
+          </div>
+          <div class="card-buy">
+            <button
+              class="card-btn"
+              @click="modalOpenProducts({ id: hom.id, hom: hom })"
+            >
+              Выбрать
+            </button>
+            <span class="card__price">от {{ hom.price }} ₽</span>
+          </div>
         </div>
-        <div class="card-buy">
-          <button class="card-btn">Выбрать</button>
-          <span class="card__price">от {{ desertsItem.price }} ₽</span>
-        </div>
-      </div>
+      </template>
       <Blockskeleton
         class="card py"
         v-for="(itemLoadings, index) in loadingLength"
@@ -169,27 +173,29 @@
       </div>
     </div>
     <div class="cards container">
-      <div
-        class="card"
-        v-for="beverage in beverages"
-        :key="beverage.id"
-        v-if="beverages"
-      >
-        <div class="news">NEW</div>
-        <router-link :to="/beverages/ + beverage.id">
-          <img :src="beverage.img" alt="" />
-        </router-link>
-        <div class="card__text">
-          <b class="card-n">{{ beverage.title }}</b>
-          <p class="card-name__info">
-            {{ beverage.text }}
-          </p>
+      <template v-if="beverages">
+        <div class="card" v-for="hom in beverages" :key="hom.id">
+          <div class="news">NEW</div>
+          <router-link :to="/beverages/ + hom.id">
+            <img :src="hom.img" alt="" />
+          </router-link>
+          <div class="card__text">
+            <b class="card-n">{{ hom.title }}</b>
+            <p class="card-name__info">
+              {{ hom.text }}
+            </p>
+          </div>
+          <div class="card-buy">
+            <button
+              class="card-btn"
+              @click="modalOpenProducts({ id: hom.id, hom: hom })"
+            >
+              Выбрать
+            </button>
+            <span class="card__price">от {{ hom.price }} ₽</span>
+          </div>
         </div>
-        <div class="card-buy">
-          <button class="card-btn">Выбрать</button>
-          <span class="card__price">от {{ beverage.price }} ₽</span>
-        </div>
-      </div>
+      </template>
       <Blockskeleton
         class="card py"
         v-for="(loading, index) in loadingLength"
@@ -207,28 +213,30 @@
       </div>
     </div>
     <div class="cards container">
-      <div
-        class="card"
-        v-for="sauces in saucesDates"
-        :key="sauces.id"
-        v-if="saucesDates"
-      >
-        <div class="news">NEW</div>
-        <router-link :to="/sauce/ + sauces.id">
-          <img :src="sauces.img" alt="" />
-        </router-link>
+      <template v-if="saucesDates">
+        <div class="card" v-for="hom in saucesDates" :key="hom.id">
+          <div class="news">NEW</div>
+          <router-link :to="/sauce/ + hom.id">
+            <img :src="hom.img" alt="" />
+          </router-link>
 
-        <div class="card__text">
-          <b class="card-n">{{ sauces.title }}</b>
-          <p class="card-name__info">
-            {{ sauces.text }}
-          </p>
+          <div class="card__text">
+            <b class="card-n">{{ hom.title }}</b>
+            <p class="card-name__info">
+              {{ hom.text }}
+            </p>
+          </div>
+          <div class="card-buy">
+            <button
+              class="card-btn"
+              @click="modalOpenProducts({ id: hom.id, hom: hom })"
+            >
+              Выбрать
+            </button>
+            <span class="card__price">от {{ hom.price }} ₽</span>
+          </div>
         </div>
-        <div class="card-buy">
-          <button class="card-btn">Выбрать</button>
-          <span class="card__price">от {{ sauces.price }} ₽</span>
-        </div>
-      </div>
+      </template>
       <Blockskeleton
         class="card py"
         v-for="(itemSauseLength, index) in SauseLength"
@@ -251,6 +259,7 @@ export default {
   data() {
     return {
       loadingLength: 8,
+      SauseLength: 8,
     };
   },
   computed: {

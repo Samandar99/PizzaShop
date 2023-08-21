@@ -8,23 +8,38 @@
       </div>
     </div>
     <div class="cards container">
-      <div class="card" v-for="comb in commboProducts" :key="comb" v-if="commboProducts">
+      <div
+        class="card"
+        v-for="hom in commboProducts"
+        :key="hom.id"
+        v-if="commboProducts"
+      >
         <!-- <div class="news">NEW</div> -->
-        <router-link :to="/combo/ + comb.id">
-          <img :src="comb.img" alt="" />
+        <router-link :to="/combo/ + hom.id">
+          <img :src="hom.img" alt="" />
         </router-link>
         <div class="card__text">
-          <b class="card-n">{{ comb.title }}</b>
+          <b class="card-n">{{ hom.title }}</b>
           <p class="card-name__info">
-            {{ comb.text }}
+            {{ hom.text }}
           </p>
         </div>
         <div class="card-buy">
-          <button class="card-btn">Выбрать</button>
-          <span class="card__price">от {{ comb.price }} ₽</span>
+          <button
+            class="card-btn"
+            @click="modalOpenProducts({ id: hom.id, hom: hom })"
+          >
+            Выбрать
+          </button>
+          <span class="card__price">от {{ hom.price }} ₽</span>
         </div>
       </div>
-      <Blockskeleton class="card py" v-for="(itemLoading, index) in loadingLength" :key="index" v-else/>
+      <Blockskeleton
+        class="card py"
+        v-for="(itemLoading, index) in loadingLength"
+        :key="index"
+        v-else
+      />
     </div>
   </section>
 </template>
@@ -48,10 +63,11 @@ export default {
   },
   methods: {
     ...mapActions(["getCommbo"]),
+    ...mapMutations(["modalOpenProducts"]),
   },
   mounted() {
     this.getCommbo();
-  }
+  },
 };
 </script>
 

@@ -23,7 +23,12 @@
             </p>
           </div>
           <div class="card-buy">
-            <button class="card-btn" @click="modalOpenProducts">Выбрать</button>
+            <button
+              class="card-btn"
+              @click="modalOpenProducts({ id: hom.id, hom: hom })"
+            >
+              Выбрать
+            </button>
             <span class="card__price">от {{ hom.price }} ₽</span>
           </div>
         </div>
